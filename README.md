@@ -11,13 +11,3 @@
 
 ### Imagem:
 ![Imagem TodoList](https://github.com/marcusvcalves/TodoListApp/blob/main/img_todolist.png)
-
-### Para rodar o projeto localmente:
-#### Iniciar o frontend
-```
-cd frontend;npm install; npm start;
-```
-#### Iniciar o backend
-```
-cd backend;dotnet ef database update;dotnet watch run;
-```
