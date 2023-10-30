@@ -2,45 +2,48 @@
 using backend.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Services
+namespace backend.Repositories
 {
-    public class TodoTaskService
+    public class TodoTaskRepository : ITodoTaskRepository
     {
         private readonly AppDbContext _context;
-        public TodoTaskService(AppDbContext context)
+
+        public TodoTaskRepository(AppDbContext context)
         {
             _context = context;
         }
-        public async Task<IEnumerable<TodoTask>> GetAll()
+        public async Task<List<TodoTask>> GetAllAsync()
         {
             return await _context.Tasks.ToListAsync();
         }
-        public async Task<TodoTask?> GetById(int id)
+
+        public async Task<TodoTask?> GetByIdAsync(int id)
         {
             return await _context.Tasks.FindAsync(id);
         }
-        public async Task<TodoTask> Create(TodoTask newTodoTask)
+        public async Task<TodoTask> CreateAsync(TodoTask newTodoTask)
         {
             _context.Tasks.Add(newTodoTask);
             await _context.SaveChangesAsync();
 
             return newTodoTask;
         }
-        public async Task Update(int id, TodoTask TodoTask)
+        public async Task UpdateAsync(int id, TodoTask todoTask)
         {
-            var existingTodoTask = await GetById(id);
+            var existingTodoTask = await GetByIdAsync(id);
 
             if (existingTodoTask != null)
             {
-                existingTodoTask.Title = TodoTask.Title;
-                existingTodoTask.Description = TodoTask.Description;
+                existingTodoTask.Title = todoTask.Title;
+                existingTodoTask.Description = todoTask.Description;
 
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task Delete(int id)
+
+        public async Task DeleteAsync(int id)
         {
-            var TodoTaskToDelete = await GetById(id);
+            var TodoTaskToDelete = await GetByIdAsync(id);
 
             if (TodoTaskToDelete != null)
             {
@@ -49,7 +52,6 @@ namespace backend.Services
                 await _context.SaveChangesAsync();
             }
         }
-
 
     }
 }

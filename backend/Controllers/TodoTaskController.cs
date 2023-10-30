@@ -1,5 +1,6 @@
-﻿using backend.Models.Entities;
-using backend.Services;
+﻿using backend.Data;
+using backend.Models.Entities;
+using backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -8,32 +9,37 @@ namespace backend.Controllers
     [Route(template: "api/v1/tasks")]
     public class TodoTaskController : ControllerBase
     {
-        private readonly TodoTaskService _service;
-        public TodoTaskController(TodoTaskService task)
+        private readonly AppDbContext _context;
+        private readonly ITodoTaskRepository _todoTaskRepository;
+
+        public TodoTaskController(AppDbContext context, ITodoTaskRepository todoTaskRepository)
         {
-            _service = task;
+            _context = context;
+            _todoTaskRepository = todoTaskRepository;
         }
         [HttpGet]
-        public async Task<IEnumerable<TodoTask>> Get()
+        public async Task<IActionResult> GetAll()
         {
-            return await _service.GetAll();
+            var todoTasks = await _todoTaskRepository.GetAllAsync();
+
+            return Ok(todoTasks);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoTask>> GetById(int id)
         {
-            var todoTask = await _service.GetById(id);
+            var todoTask = await _todoTaskRepository.GetByIdAsync(id);
 
             if (todoTask == null)
             {
                 return NotFound();
             }
 
-            return todoTask;
+            return Ok(todoTask);
         }
         [HttpPost]
         public async Task<IActionResult> Create(TodoTask todoTask)
         {
-            var newTodoTask = await _service.Create(todoTask);
+            var newTodoTask = await _todoTaskRepository.CreateAsync(todoTask);
 
             return CreatedAtAction(nameof(GetById), new { id = newTodoTask.Id }, newTodoTask);
         }
@@ -45,12 +51,12 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
-            var taskToUpdate = await _service.GetById(id);
+            var taskToUpdate = await _todoTaskRepository.GetByIdAsync(id);
 
             if (taskToUpdate != null)
             {
-                await _service.Update(id, todoTask);
-                return NoContent();
+                await _todoTaskRepository.UpdateAsync(id, todoTask);
+                return Ok(taskToUpdate);
             }
             else
             {
@@ -60,12 +66,12 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var todoTaskToDelete = await _service.GetById(id);
+            var todoTaskToDelete = await _todoTaskRepository.GetByIdAsync(id);
 
             if (todoTaskToDelete != null)
             {
-                await _service.Delete(id);
-                return Ok();
+                await _todoTaskRepository.DeleteAsync(id);
+                return Ok(todoTaskToDelete);
             }
             else
             {

@@ -1,12 +1,12 @@
 using backend.Data;
-using backend.Services;
+using backend.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>();
-builder.Services.AddScoped<TodoTaskService>();
+builder.Services.AddScoped<ITodoTaskRepository, TodoTaskRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
