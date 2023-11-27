@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  sql-server-db:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - '1743:1433'
+    depends_on:
+      - todolist-backend
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "StrongPassword123!"
+      MSSQL_PID: Express
+    volumes:
+      - sql-server-data:/var/opt/mssql
+  todolist-backend:
+    image: todolist-backend
+    build: ./backend
+    ports:
+      - '80:80'
+    environment:
+      DBServer: "sql-server-db"
+  todolist-frontend:
+    image: todolist-frontend
+    build: ./frontend
+    ports:
+      - '3000:3000'
+volumes:
+  sql-server-data:
