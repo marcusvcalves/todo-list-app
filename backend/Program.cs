@@ -1,5 +1,6 @@
 using backend.Data;
 using backend.Repositories;
+using backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,12 +27,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Apply migration
+DatabaseManagementService.MigrationInitialization(app);
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
