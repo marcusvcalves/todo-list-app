@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'https://localhost:7011'
+    baseURL: 'http://localhost:80'
 })
