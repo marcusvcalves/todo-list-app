@@ -16,7 +16,14 @@ namespace backend.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("WebApiDatabase"));
+            var server = Configuration["DBServer"] ?? "localhost";
+            var port = Configuration["DBPort"] ?? "1433";
+            var user = Configuration["DBUser"] ?? "SA";
+            var password = Configuration["DBPassword"] ?? "StrongPassword123!";
+            var database = Configuration["Database"] ?? "TodoListDatabase";
+
+            optionsBuilder.UseSqlServer($"Server={server},{port};Initial catalog={database};User ID={user};Password={password};TrustServerCertificate=true",
+                                        options => options.EnableRetryOnFailure());
         }
     }
 }
