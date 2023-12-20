@@ -1,7 +1,7 @@
 # TodoListApp
 
-#### Projeto utilizando .NET no back-end e React no front-end
-### O que foi utilizado:
+Um Aplicativo de Lista de Tarefas simples com .NET no backend e React no frontend
+### Tecnologias Utilizadas:
 - .NET 6
 - Entity Framework Core
 - API Rest
@@ -9,5 +9,5 @@
 - Axios
 - Styled Components
 
-### Imagem:
+### Preview:
 ![Imagem TodoList](https://github.com/marcusvcalves/TodoListApp/blob/main/img_todolist.png)
