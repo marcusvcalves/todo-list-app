@@ -1,7 +1,7 @@
-# TodoListApp
+# todo-list-app
 
-Um Aplicativo de Lista de Tarefas simples com .NET no backend e React no frontend
-### Tecnologias Utilizadas:
+Um CRUD de Lista de Tarefas com .NET no backend e React no frontend
+## Tecnologias Utilizadas:
 - .NET 6
 - Entity Framework Core
 - API Rest
@@ -9,5 +9,12 @@ Um Aplicativo de Lista de Tarefas simples com .NET no backend e React no fronten
 - Axios
 - Styled Components
 
-### Preview:
+## Instalação
+1. Tendo o docker instalado, basta executar o comando:
+```
+docker compose up --build
+```
+
+
+## Preview:
 ![Imagem TodoList](https://github.com/marcusvcalves/TodoListApp/blob/main/img_todolist.png)
