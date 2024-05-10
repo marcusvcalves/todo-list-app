@@ -10,7 +10,7 @@ Um CRUD de Lista de Tarefas com .NET no backend e React no frontend
 - Styled Components
 
 ## Instalação
-1. Tendo o docker instalado, basta executar o comando:
+1. Tendo o docker compose instalado, basta executar o comando:
 ```
 docker compose up --build
 ```
